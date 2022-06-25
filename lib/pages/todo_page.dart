@@ -1,15 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_todo_app/data/todo_sevice.dart';
-
 import '../models/todo.dart';
 
-class TodoPage extends StatelessWidget {
+class TodoPage extends StatefulWidget {
+  @override
+  State<TodoPage> createState() => _TodoPageState();
+}
+
+class _TodoPageState extends State<TodoPage> {
   TodoService todoService = TodoService.instance;
+
   final titleController = TextEditingController();
+
   final descController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final titleField = TextFormField(
@@ -28,20 +32,21 @@ class TodoPage extends StatelessWidget {
       onPressed: () {
         todoService
             .addTodo(Todo(
-                //id: 0,
+                //id: ,
                 title: titleController.text,
                 description: descController.text,
-                isDone: false))
+                isDone: false,
+                id: 0))
             .then((value) => Navigator.pop(context));
       },
-      child: Text(
+      child: const Text(
         "Save",
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
       ),
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text("New To do"),
+        title: const Text("New To do"),
       ),
       body: Column(
         children: [
@@ -49,7 +54,7 @@ class TodoPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: titleField,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(

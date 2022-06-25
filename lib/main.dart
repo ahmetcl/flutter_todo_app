@@ -8,11 +8,13 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
         length: 2,
-        child: TodoListPage(),
+        child: TodoListPage(
+          key: null,
+        ),
       ),
     );
   }

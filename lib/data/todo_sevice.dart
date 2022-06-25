@@ -32,13 +32,13 @@ class TodoService {
     return await db.query('todos');
   }
 
-  static Database _db;
+  static Database? _db;
 
   Future<Database> get db async {
     if (_db == null) {
       _db = await _initDb();
     }
-    return _db;
+    return _db!;
   }
 
   Future<Database> _initDb() async {

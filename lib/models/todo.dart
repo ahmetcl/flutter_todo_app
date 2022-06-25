@@ -4,10 +4,14 @@ class Todo {
   String description;
   bool isDone;
 
-  Todo({this.id, this.title, this.description, this.isDone});
+  Todo(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.isDone});
 
   Map<String, dynamic> toMap() {
-    final map = Map<String, dynamic>();
+    final map = <String, dynamic>{};
     if (id != null) {
       map['id'] = id;
     }

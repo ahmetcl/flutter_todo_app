@@ -4,6 +4,8 @@ import 'package:flutter_todo_app/models/todo.dart';
 import 'package:flutter_todo_app/pages/todo_page.dart';
 
 class TodoListPage extends StatefulWidget {
+  const TodoListPage({required Key? key}) : super(key: key);
+
   @override
   State<TodoListPage> createState() => _TodoListPageState();
 }
@@ -23,9 +25,9 @@ class _TodoListPageState extends State<TodoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("To Do"),
+        title: const Text("To Do"),
         centerTitle: true,
-        bottom: TabBar(
+        bottom: const TabBar(
           tabs: [
             Tab(
               icon: Icon(Icons.check_box_outline_blank),
@@ -47,34 +49,36 @@ class _TodoListPageState extends State<TodoListPage> {
           Navigator.push(context, MaterialPageRoute(builder: (_) => TodoPage()))
               .then((value) => loadData());
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
 
   Widget getTodoList(List<Todo> todos) {
-    return todos.length == 0
-        ? Center(child: Text('Henüz bir şey yok'))
-        : ListView.builder(
-            itemCount: todos.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  title: Text(todos[index].title),
-                  subtitle: Text(todos[index].description),
-                  trailing: Checkbox(
-                    onChanged: (value) {
-                      todos[index].isDone = value;
-                      service
-                          .updateIsDone(todos[index])
-                          .then((value) => loadData());
-                    },
-                    value: todos[index].isDone,
-                  ),
-                ),
-              );
-            },
+    if (todos.isEmpty) {
+      return const Center(child: Text('Henüz bir şey yok'));
+    } else {
+      return ListView.builder(
+        itemCount: todos.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              title: Text(todos[index].title),
+              subtitle: Text(todos[index].description),
+              trailing: Checkbox(
+                onChanged: (value) {
+                  todos[index].isDone = value!;
+                  service
+                      .updateIsDone(todos[index])
+                      .then((value) => loadData());
+                },
+                value: todos[index].isDone,
+              ),
+            ),
           );
+        },
+      );
+    }
   }
 
   loadData() {
